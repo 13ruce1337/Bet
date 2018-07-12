@@ -57,11 +57,22 @@
 				left:130px;
 				text-align:center;
 			}
+			.combo {
+				color:yellow;
+				position: relative;
+				height: 30px;
+				width:100px;
+				text-align: center;
+				left: 260px;
+				top:-30px;
+			}
 		</style>
 		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 		<script>
 			$(document).ready(function(){
-				var score=100;
+				var score, combo;
+				score=100;
+				combo=0;
 
 				$("#score").text("$ "+score);
 
@@ -94,16 +105,31 @@
 
 					//win logic
 					if (correct === clicked) {
+						//win
 						$("#answer").css("color", "lightgreen");
 						$("#answer").text("You win!");
 						score=score+bet;
 						$("#score").text("$ "+score);
+
+						//combo
+						combo += 1;
+						if (combo > 1) {
+							$("#combo").text("Combo: " + combo);
+						}
+						console.log(combo);
 						return
 					} else {
+						//loss
 						$("#answer").css("color", "red");
 						$("#answer").text("You loss!");
 						score=score-bet;
 						$("#score").text("$ "+score);
+
+						//break combo
+						combo = 0;
+						$("#combo").text("")
+						console.log(combo);
+
 						if(score == 0){
 							$("#score").text("$ "+score);
 							$("#answer").text("You have loss EVERYTHING! GO HOME YOU'RE DRUNK!");
@@ -117,6 +143,7 @@
 	</head>
 	<body>
 		<div class="score" id="score"></div>
+		<div class="combo" id="combo"></div>
 		<div class="box1 box"></div>
 		<div class="box2 box"></div>
 		<div class="box3 box"></div>
